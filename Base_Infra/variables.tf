@@ -53,9 +53,3 @@ variable "private_ip_for_nat_gateway" {
 }
 
 
-# variable "microservices" {
-#   type = map(object({
-#     container_port        = number
-#   }))
-#   description = "A map of microservices to be deployed"
-# }

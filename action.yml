@@ -1,0 +1,50 @@
+name: 'Terraform Action'
+description: 'Run Terraform to deploy infrastructure'
+author: 'Pradipbabar'
+inputs:
+  base_conf_var:
+    description: 'path to base configuration variables file '
+    required: false
+
+  platform_conf_var:
+    description: 'path to platform configuration variables file stored in '
+    required: false
+
+  aws_access_key:
+    description: 'AWS Access Key ID from GitHub Secrets'
+    required: true
+
+  aws_secret_access_key:
+    description: 'AWS Secret Access Key from GitHub Secrets'
+    required: true
+
+  aws_default_region:
+    description: 'AWS Default Region from GitHub Secrets'
+    required: true
+  
+  remote_bucket_name:
+    description: 'AWS s3 bucket name to store statefile remotely'
+    required: true
+
+  remote_bucket_region:
+    description: 'AWS S3 bucket Region where statefile stored'
+    required: true
+
+  action:
+    description: 'Terraform Action to apply or destroy infrastructure'
+    required: false
+    default: 'apply'
+
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    INPUT_BASE_CONF_VAR: ${{ inputs.base_conf_var }}
+    INPUT_PLATFORM_CONF_VAR: ${{ inputs.platform_conf_var }}
+    INPUT_AWS_ACCESS_KEY: ${{ inputs.aws_access_key }}
+    INPUT_AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
+    INPUT_AWS_DEFAULT_REGION: ${{ inputs.aws_default_region }}
+    INPUT_REMOTE_BUCKET_NAME: ${{ inputs.remote_bucket_name }}
+    INPUT_REMOTE_BUCKET_REGION: ${{ inputs.remote_bucket_region }}
+    INPUT_ACTION: ${{ inputs.action }}

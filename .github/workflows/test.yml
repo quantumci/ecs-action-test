@@ -1,0 +1,22 @@
+name: Test ECS action
+on: workflow_dispatch 
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: run local actions
+        uses: ./ # use correct github action here 
+        with:
+          base_conf_var: ./Base_Infra/config.tfvars
+          platform_conf_var: ./Platform_Infra/config.tfvars
+          INPUT_AWS_ACCESS_KEY: xxy # add Secretes variables 
+          INPUT_AWS_SECRET_ACCESS_KEY: yyyy # add Secretes variables
+          INPUT_AWS_DEFAULT_REGION: us-east-1
+          INPUT_REMOTE_BUCKET_NAME: test-123-ecs # add your own s3 bucket name
+          INPUT_REMOTE_BUCKET_REGION: us-east-1 # add your own s3 bucket region
+          INPUT_ACTION: apply

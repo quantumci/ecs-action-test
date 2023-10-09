@@ -1,0 +1,7 @@
+README.md
+Dockerfile
+.dockerignore
+action.yml
+*.cover
+*.log
+.git*
