@@ -32,7 +32,6 @@ jobs:
           INPUT_ACTION: apply
 ```
 
-Make sure to replace `<replace-with-your-action-reference>` with the correct GitHub Action reference for your ECS action. Also, ensure that you have appropriate secrets set up in your repository for AWS access and secret keys.
 
 ## Usage
 
