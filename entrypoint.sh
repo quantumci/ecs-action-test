@@ -13,6 +13,11 @@ sed -i "s/region=\"[^\"]+\"/region=\"$INPUT_REMOTE_BUCKET_REGION\"/g" "$config2_
 export AWS_ACCESS_KEY_ID=$INPUT_AWS_ACCESS_KEY
 export AWS_SECRET_ACCESS_KEY=$INPUT_AWS_SECRET_ACCESS_KEY
 
+# check aws creds not for production use
+echo "$AWS_ACCESS_KEY_ID";
+echo "$AWS_SECRET_ACCESS_KEY";
+cat $INPUT_BASE_CONF_VAR
+
 cd /workspace/Base_Infra/
 terraform init -backend-config="./env/base.config"
 terraform plan -var-file="$INPUT_BASE_CONF_VAR"
