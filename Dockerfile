@@ -33,7 +33,7 @@ RUN pwd
 
 RUN ls
 
-RUN chmod +x entrypoint.sh
+RUN chmod +x /workspace/entrypoint.sh
 
 
 CMD ["/workspace/entrypoint.sh"]
