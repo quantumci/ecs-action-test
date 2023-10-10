@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Update the values in the config file
 config1_file="/workspace/Base_Infra/env/base.config"
 config2_file="/workspace/Platform_Infra/env/platform.config"
