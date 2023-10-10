@@ -1,6 +1,6 @@
 name: Test ECS action
 on: 
-  workflow_call:
+  workflow_dispatch:
       inputs:
         action_input:
           description: 'Action to perform'
