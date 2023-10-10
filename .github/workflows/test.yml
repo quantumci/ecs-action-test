@@ -1,5 +1,16 @@
 name: Test ECS action
-on: workflow_dispatch 
+on: 
+  workflow_dispatch:
+      inputs:
+        action_input:
+          description: 'Action to perform'
+          required: true
+          default: 'plan'
+          options:
+            spin-up-infra: apply
+            destroy-inra: destroy
+            test-infra: plan
+
 
 jobs:
   test-action:
@@ -14,9 +25,9 @@ jobs:
         with:
           base_conf_var: ./Base_Infra/config.tfvars
           platform_conf_var: ./Platform_Infra/config.tfvars
-          INPUT_AWS_ACCESS_KEY: xxy # add Secretes variables 
-          INPUT_AWS_SECRET_ACCESS_KEY: yyyy # add Secretes variables
+          INPUT_AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }} # add Secretes variables 
+          INPUT_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # add Secretes variables
           INPUT_AWS_DEFAULT_REGION: us-east-1
           INPUT_REMOTE_BUCKET_NAME: test-123-ecs # add your own s3 bucket name
           INPUT_REMOTE_BUCKET_REGION: us-east-1 # add your own s3 bucket region
-          INPUT_ACTION: apply
+          INPUT_ACTION: ${{ github.event.inputs.action_input }}
