@@ -20,7 +20,7 @@ cat $INPUT_BASE_CONF_VAR
 
 cd /workspace/Base_Infra/
 ls
-cp $INPUT_BASE_CONF_VAR config1.tfvars
+cat $INPUT_BASE_CONF_VAR > config1.tfvars
 ls
 terraform init -backend-config="./env/base.config"
 terraform plan -var-file="./config1.tfvars"
