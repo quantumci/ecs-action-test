@@ -6,6 +6,11 @@ on:
           description: 'Action to perform'
           required: true
           default: 'plan'
+          type: choice
+          options:
+            - plan
+            - apply
+            - destroy
         
 
 
