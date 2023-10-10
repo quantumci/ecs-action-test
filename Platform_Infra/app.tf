@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "my_task" {
 resource "aws_ecs_service" "microservices" {
 
   name            = "my-service"
-  task_definition = aws_ecs_task_definition.arn
+  task_definition = aws_ecs_task_definition.my_task.arn
   desired_count   = 2
   cluster         = aws_ecs_cluster.my_cluster.id
   launch_type     = "FARGATE"
