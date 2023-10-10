@@ -27,7 +27,8 @@ terraform plan -var-file="./config1.tfvars"
 terraform $INPUT_ACTION -var-file="./config1.tfvars"
 
 cd /workspace/Platform_Infra/
+cat $INPUT_PLATFORM_CONF_VAR > config2.tfvars
 terraform init -backend-config="./env/platform.config"
-terraform plan -var-file="$INPUT_PLATFORM_CONF_VAR"
-terraform $INPUT_ACTION -var-file="$INPUT_PLATFORM_CONF_VAR"
+terraform plan -var-file="./config2.tfvars"
+terraform $INPUT_ACTION -var-file="./config2.tfvars"
 
