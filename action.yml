@@ -33,7 +33,7 @@ inputs:
   action:
     description: 'Terraform Action to apply or destroy infrastructure'
     required: false
-    default: 'apply'
+    default: 'plan'
 
 
 runs:
