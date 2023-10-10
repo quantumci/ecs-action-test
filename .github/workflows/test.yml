@@ -27,4 +27,4 @@ jobs:
           INPUT_AWS_DEFAULT_REGION: us-east-1
           INPUT_REMOTE_BUCKET_NAME: test-123-ecs # add your own s3 bucket name
           INPUT_REMOTE_BUCKET_REGION: us-east-1 # add your own s3 bucket region
-          INPUT_ACTION: ${{ github.event.inputs.action_input }}
+          INPUT_ACTION: ${{ inputs.action_input }}
