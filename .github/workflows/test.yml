@@ -30,6 +30,6 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # add Secretes variables 
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # add Secretes variables
           aws_default_region: us-east-1
-          remote_bucket_name: test-123-ecs # add your own s3 bucket name
+          remote_bucket_name: pradip-bucket-ecs-111 # add your own s3 bucket name
           remote_bucket_region: us-east-1 # add your own s3 bucket region
           action: ${{ inputs.action_input }}
