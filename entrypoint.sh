@@ -19,9 +19,12 @@ echo "$AWS_SECRET_ACCESS_KEY";
 cat $INPUT_BASE_CONF_VAR
 
 cd /workspace/Base_Infra/
+ls
+cp $INPUT_BASE_CONF_VAR config1.tfvars
+ls
 terraform init -backend-config="./env/base.config"
-terraform plan -var-file="$INPUT_BASE_CONF_VAR"
-terraform $INPUT_ACTION -var-file="$INPUT_BASE_CONF_VAR"
+terraform plan -var-file="./config1.tfvars"
+terraform $INPUT_ACTION -var-file="./config1.tfvars"
 
 cd /workspace/Platform_Infra/
 terraform init -backend-config="./env/platform.config"
