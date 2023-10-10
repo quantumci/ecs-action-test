@@ -10,6 +10,13 @@ on:
             spin-up-infra: apply
             destroy-inra: destroy
             test-infra: plan
+          message:
+            required: true
+          use-emoji:
+            type: boolean
+            description: Include 🎉🤣 emojis
+          environment:
+            type: environment            
 
 
 jobs:
