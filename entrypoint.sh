@@ -4,10 +4,10 @@
 config1_file="/workspace/Base_Infra/env/base.config"
 config2_file="/workspace/Platform_Infra/env/platform.config"
 
-sed -i "s/bucket=\"[^\"]*\"/bucket=\"$INPUT_REMOTE_BUCKET_NAME\"/g" "$config1_file"
-sed -i "s/region=\"[^\"]*\"/region=\"$INPUT_REMOTE_BUCKET_REGION\"/g" "$config1_file"
-sed -i "s/bucket=\"[^\"]*\"/bucket=\"$INPUT_REMOTE_BUCKET_NAME\"/g" "$config2_file"
-sed -i "s/region=\"[^\"]*\"/region=\"$INPUT_REMOTE_BUCKET_REGION\"/g" "$config2_file"
+sed -i "s/bucket=\"[^\"]+\"/bucket=\"$INPUT_REMOTE_BUCKET_NAME\"/g" "$config1_file"
+sed -i "s/region=\"[^\"]+\"/region=\"$INPUT_REMOTE_BUCKET_REGION\"/g" "$config1_file"
+sed -i "s/bucket=\"[^\"]+\"/bucket=\"$INPUT_REMOTE_BUCKET_NAME\"/g" "$config2_file"
+sed -i "s/region=\"[^\"]+\"/region=\"$INPUT_REMOTE_BUCKET_REGION\"/g" "$config2_file"
 
 # check config file not for production use
 cat $config1_file;
