@@ -14,24 +14,10 @@ on:
 
         existing_base_infra:
         description: 'base infa existed ?(yes/no)'
-        required: false
         default: 'yes'
-        type: choice
-        options:
-          - yes
-          - no
 
         existing_platform_infra:
-        description: 'base platform existed ?(yes/no)'
-        required: false
-        default: 'yes'
-        type: choice
-        options:
-          - yes
-          - no        
-
-          
-
+        description: 'base platform existed ?(yes/no)'    
 
 jobs:
   test-action:
