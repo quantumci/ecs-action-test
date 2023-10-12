@@ -39,6 +39,16 @@ export AWS_SECRET_ACCESS_KEY=$INPUT_AWS_SECRET_ACCESS_KEY;
 echo "$AWS_ACCESS_KEY_ID";
 echo "$AWS_SECRET_ACCESS_KEY";
 
+# Validate the INPUT_ACTION variable (should be one of: plan, apply, destroy, etc.)
+
+if [[ ! "$INPUT_ACTION" =~ ^(plan|apply|destroy|refresh|validate)$ ]]; then
+
+    echo "Error: Invalid INPUT_ACTION. It should be one of: plan, apply, destroy, refresh, validate."
+
+    exit 1
+
+fi
+
 cd /workspace/Base_Infra/
 ls;
 cat $INPUT_BASE_CONF_VAR > config1.tfvars
