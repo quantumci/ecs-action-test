@@ -12,13 +12,6 @@ on:
             - apply
             - destroy
 
-        existing_base_infra:
-        description: 'base infa existed ?(yes/no)'
-        default: 'yes'
-
-        existing_platform_infra:
-        description: 'base platform existed ?(yes/no)'    
-
 jobs:
   test-action:
     runs-on: ubuntu-latest
@@ -30,8 +23,8 @@ jobs:
       - name: run local actions
         uses: ./ # use correct github action here eg.  quantumci/ecs-action-test@v1.0.0
         with:
-          existing_base_infra: ${{ inputs.existing_base_infra }}
-          existing_platform_infra: ${{ inputs.existing_platform_infra }}
+          existing_base_infra: yes
+          existing_platform_infra: no
           base_conf_var: ./Base_Infra/config.tfvars
           platform_conf_var: ./Platform_Infra/config.tfvars
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # add Secretes variables 
