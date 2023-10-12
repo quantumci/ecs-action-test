@@ -24,10 +24,7 @@ fi
 
 
 
-# check config file not for production use
-cat $config1_file;
-echo "blank"
-cat $config2_file;
+
 # Check if AWS credentials are set
 
 if [[ -z "$INPUT_AWS_ACCESS_KEY" || -z "$INPUT_AWS_SECRET_ACCESS_KEY" ]]; then
@@ -45,9 +42,7 @@ else
 fi
 
 
-# check aws creds not for production use
-echo "$AWS_ACCESS_KEY_ID";
-echo "$AWS_SECRET_ACCESS_KEY";
+
 
 # Validate the INPUT_ACTION variable (should be one of: plan, apply, destroy, etc.)
 
