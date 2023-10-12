@@ -5,12 +5,13 @@ on:
         action_input:
           description: 'Action to perform'
           required: true
-          default: 'plan'
+          default: 'test'
           type: choice
           options:
-            - plan
+            - test
             - apply
             - destroy
+            - validate
 
 jobs:
   test-action:

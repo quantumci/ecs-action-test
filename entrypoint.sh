@@ -11,7 +11,7 @@ config2_file="/workspace/Platform_Infra/env/platform.config"
 
 if [[ ! "$config1_file" || ! "$config2_file" ]]; then
 
-    echo -e "${RED}Error: Configurations not found."
+    echo -e "${RED}Error: Remote backend configurations not found."
     exit 1
 else
     sed -i "s/bucket=\"[^\"]+\"/bucket=\"$INPUT_REMOTE_BUCKET_NAME\"/g" "$config1_file"
@@ -19,7 +19,7 @@ else
     sed -i "s/bucket=\"[^\"]+\"/bucket=\"$INPUT_REMOTE_BUCKET_NAME\"/g" "$config2_file"
     sed -i "s/region=\"[^\"]+\"/region=\"$INPUT_REMOTE_BUCKET_REGION\"/g" "$config2_file"
 
-    echo -e "${GREEN} Remote backend suceesfully configured"
+    echo -e "${GREEN} Remote backend configuration found"
 fi
 
 
@@ -37,7 +37,7 @@ else
     export AWS_ACCESS_KEY_ID=$INPUT_AWS_ACCESS_KEY;
     export AWS_SECRET_ACCESS_KEY=$INPUT_AWS_SECRET_ACCESS_KEY;
     
-    echo -e "${GREEN} AWS secret configured successful"
+    echo -e "${GREEN} AWS secret configured successfully"
 
 fi
 
@@ -46,9 +46,9 @@ fi
 
 # Validate the INPUT_ACTION variable (should be one of: plan, apply, destroy, etc.)
 
-if [[ ! "$INPUT_ACTION" =~ ^(plan|apply|destroy|refresh|validate)$ ]]; then
+if [[ ! "$INPUT_ACTION" =~ ^(test|apply|destroy|refresh|validate)$ ]]; then
 
-    echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: plan, apply, destroy, refresh, validate."
+    echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: test, apply, destroy, refresh, validate."
 
     exit 1
 
@@ -81,11 +81,11 @@ if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
             exit 1
         fi
 
-    elif [[ "$INPUT_ACTION" == "plan" ]]; then
+    elif [[ "$INPUT_ACTION" == "test" ]]; then
         if terraform plan -var-file="./config1.tfvars"; then
-            echo -e "${GREEN} Terraform plan completed successfully."
+            echo -e "${GREEN} Infrastructure test completed successfully."
         else
-            echo -e "${RED}Error: Terraform plan failed."
+            echo -e "${RED}Error: Infrastructure test failed. please check configuration variables"
             exit 1
         fi
     # Check if the INPUT_ACTION is "validate"
@@ -114,7 +114,7 @@ if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
             exit 1
         fi
     else
-        echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: apply, plan, validate, destroy."
+        echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: apply, test, validate, destroy."
         exit 1
     fi
 
@@ -155,11 +155,11 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
             exit 1
         fi
 
-    elif [[ "$INPUT_ACTION" == "plan" ]]; then
+    elif [[ "$INPUT_ACTION" == "test" ]]; then
         if terraform plan -var-file="./config2.tfvars"; then
-            echo -e "${GREEN} Terraform plan completed successfully."
+            echo -e "${GREEN} Infrastructure test completed successfully."
         else
-            echo -e "${RED}Error: Terraform plan failed."
+            echo -e "${RED}Error: Infrastructure test failed. Please check config variables."
             exit 1
         fi
     # Check if the INPUT_ACTION is "validate"
@@ -188,7 +188,7 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
             exit 1
         fi
     else
-        echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: apply, plan, validate, destroy."
+        echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: apply, test, validate, destroy."
         exit 1
     fi
 
