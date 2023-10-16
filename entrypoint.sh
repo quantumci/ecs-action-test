@@ -206,6 +206,6 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
 fi
 
 
-echo "terraform $INPUT_ACTION -var-file=./config2.tfvars"
+# echo "terraform $INPUT_ACTION -var-file=./config2.tfvars"
 
 
