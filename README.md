@@ -62,13 +62,14 @@ on:
         action_input:
           description: 'Action to perform'
           required: true
-          default: 'plan'
+          default: 'test'
           type: choice
           options:
-            - plan
+            - test
             - apply
             - destroy
-          
+            - validate
+
 jobs:
   test-action:
     runs-on: ubuntu-latest
@@ -78,8 +79,10 @@ jobs:
         uses: actions/checkout@v4
       
       - name: run local actions
-        uses: ./ # use correct github action here eg.  quantumci/ecs-action-test@v1.0.0
+        uses: quantumci/ecs-action-test@v1.0.0   # Replace with the correct GitHub Action reference, e.g., quantumci/ecs-action-test@v1.0.0
         with:
+          existing_base_infra: no
+          existing_platform_infra: yes
           base_conf_var: ./Base_Infra/config.tfvars
           platform_conf_var: ./Platform_Infra/config.tfvars
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # add Secretes variables 
