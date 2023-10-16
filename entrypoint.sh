@@ -84,7 +84,7 @@ spinup() {
         echo -e "${RED}Error: Please Add Remote Configiuration"
 
     fi
-    
+
     if [[ "$INPUT_ACTION" == "apply" ]]; then
         if [[ -f "./config1.tfvars" ]];then
             if terraform apply -auto-aprove -var-file="./config1.tfvars"; then
@@ -140,9 +140,12 @@ if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
     echo "change directory to pwd"
     spinup "$INPUT_BASE_CONF_VAR"
     
+elif  [["$INPUT_EXISTING_BASE_INFRA" == "yes"]]; then
+    echo -e "${GREEN}  you have existed base infra "
 
 else
-    echo -e "${GREEN} you have existed base infra"
+    echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
+    exit 1
 fi
 
 ################################################################################################################
@@ -156,6 +159,10 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
     
 else
     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
+
+elif  [["$INPUT_EXISTING_PLATFORM_INFRA" == "yes"]]; then
+    echo -e "${GREEN}  you have existed platform infra "
+
 fi
 
 
