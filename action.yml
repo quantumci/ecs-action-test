@@ -57,3 +57,4 @@ runs:
     INPUT_REMOTE_BUCKET_NAME: ${{ inputs.remote_bucket_name }}
     INPUT_REMOTE_BUCKET_REGION: ${{ inputs.remote_bucket_region }}
     INPUT_ACTION: ${{ inputs.action }}
+    INPUT_REPO: ${{ github.repository }}
