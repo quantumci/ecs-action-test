@@ -50,7 +50,7 @@ runs:
     INPUT_EXISTING_BASE_INFRA: ${{ inputs.existing_base_infra }}
     INPUT_EXISTING_PLATFORM_INFRA: ${{ inputs.existing_platform_infra }}
     INPUT_BASE_CONF_VAR: ${{ inputs.base_conf_var }}
-    INPUT_PLATFORM_CONF_VAR: ${{ github.workspace }}/${{ inputs.platform_conf_var }}
+    INPUT_PLATFORM_CONF_VAR: ${{ inputs.platform_conf_var }}
     INPUT_AWS_ACCESS_KEY: ${{ inputs.aws_access_key }}
     INPUT_AWS_SECRET_ACCESS_KEY: ${{ inputs.aws_secret_access_key }}
     INPUT_AWS_DEFAULT_REGION: ${{ inputs.aws_default_region }}
