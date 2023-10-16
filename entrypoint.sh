@@ -71,11 +71,7 @@ fi
 spinup() {
 
     if [[ "$1" ]]; then
-        ls;
-        cat $1 > config1.tfvars;
-        echo "blank space ###########################"
-        cat config1.tfvars;
-        ls;
+        cat $1 > config1.tfvars
         echo -e "${GREEN} variable Configuration Available."
     else
         echo -e "${RED}Error: Configuration variable are not available."
@@ -138,7 +134,7 @@ spinup() {
         exit 1
     fi
 }
-#########################################################################################
+
 if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
     echo "change directory to pwd"
@@ -153,7 +149,8 @@ else
 fi
 
 ################################################################################################################
-
+# terraform plan -var-file="$INPUT_BASE_CONF_VAR"
+# echo "terraform $INPUT_ACTION -var-file=./config1.tfvars"
 
 if [["$INPUT_EXISTING_PLATFORM_INFRA" == no ]]; then
     cd /workspace/Platform_Infra/
