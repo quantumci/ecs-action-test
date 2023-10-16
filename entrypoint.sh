@@ -201,8 +201,8 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
         exit 1
     fi
 
-else
-    echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
+# else
+#     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
 fi
 
 
