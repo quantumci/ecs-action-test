@@ -137,7 +137,7 @@ spinup() {
         exit 1
     fi
 }
-
+#########################################################################################
 if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
     echo "change directory to pwd"
