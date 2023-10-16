@@ -71,8 +71,10 @@ fi
 spinup() {
 
     if [[ "$1" ]]; then
-        cat $1
+        
         cat $1 > config1.tfvars
+        car config1.tfvars
+        
         echo -e "${GREEN} variable Configuration Available."
     else
         echo -e "${RED}Error: Configuration variable are not available."
