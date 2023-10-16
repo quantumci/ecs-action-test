@@ -41,6 +41,17 @@ else
 
 fi
 
+# Check inputs is yes or no for INPUT_BASE_CONF_VAR and INPUT_PLATFORM_CONF_VAR
+if [[ "$INPUT_EXISTING_BASE_INFRA" != "yes" && "$INPUT_EXISTING_BASE_INFRA" != "no" ]]; then
+    echo -e "${RED} Error: input for existing_base_infra must be either yes or no "
+    exit 1
+fi
+
+if [[ "$INPUT_EXISTING_PLATFORM_INFRA" != "yes" && "$INPUT_EXISTING_PLATFORM_INFRA" != "no" ]]; then
+    echo -e "${RED} Error: input for existing_platform_infra must be either yes or no "
+    exit 1
+fi
+
 
 
 
@@ -118,10 +129,8 @@ if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
         exit 1
     fi
 
-elif [["$INPUT_EXISTING_BASE_INFRA" == "yes"]]; then
-    echo -e "${GREEN} you have existed base infra"
 else
-    echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
+    echo -e "${GREEN} you have existed base infra"
 fi
 
 ################################################################################################################
@@ -192,8 +201,6 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
         exit 1
     fi
 
-elif [["$INPUT_EXISTING_BASE_INFRA" == "yes"]]; then
-    echo -e "${GREEN} you have existed base infra"
 else
     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
 fi
