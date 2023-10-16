@@ -149,8 +149,7 @@ else
 fi
 
 ################################################################################################################
-# terraform plan -var-file="$INPUT_BASE_CONF_VAR"
-# echo "terraform $INPUT_ACTION -var-file=./config1.tfvars"
+
 
 if [["$INPUT_EXISTING_PLATFORM_INFRA" == no ]]; then
     cd /workspace/Platform_Infra/
@@ -164,6 +163,3 @@ else
     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
 
 fi
-
-
-# echo "terraform $INPUT_ACTION -var-file=./config2.tfvars"
