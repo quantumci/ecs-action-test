@@ -65,11 +65,13 @@ if [[ ! "$INPUT_ACTION" =~ ^(test|apply|destroy|refresh|validate)$ ]]; then
 
 fi
 
-if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
-    cd /workspace/Base_Infra/
-    echo "change directory to pwd"
-    if [[ "$INPUT_BASE_CONF_VAR" ]]; then
-        cat $INPUT_BASE_CONF_VAR > config1.tfvars
+
+# Funcrion For Run Terraform\
+
+spinup() {
+
+    if [[ "$1" ]]; then
+        cat $1 > config1.tfvars
         echo -e "${GREEN} variable Configuration Available."
     else
         echo -e "${RED}Error: Configuration variable are not available."
@@ -128,84 +130,30 @@ if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
         echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: apply, test, validate, destroy."
         exit 1
     fi
+}
 
-# else
-#     echo -e "${GREEN} you have existed base infra"
+if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
+    cd /workspace/Base_Infra/
+    echo "change directory to pwd"
+    spinup "$INPUT_BASE_CONF_VAR"
+    
+
+else
+    echo -e "${GREEN} you have existed base infra"
 fi
 
 ################################################################################################################
 # terraform plan -var-file="$INPUT_BASE_CONF_VAR"
-echo "terraform $INPUT_ACTION -var-file=./config1.tfvars"
+# echo "terraform $INPUT_ACTION -var-file=./config1.tfvars"
 
 if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
     cd /workspace/Platform_Infra/
     echo "change directory to ${pwd}"
-    if [[ "$INPUT_BASE_CONF_VAR" ]]; then
-        cat $INPUT_BASE_CONF_VAR > config2.tfvars
-        echo -e "${GREEN} variable Configuration Available."
-    else
-        echo -e "${RED}Error: Configuration variable are not available."
-        exit 1
-
-    if terraform init -backend-config="./env/platform.config"; then
-        echo -e "${GREEN} Infra setup Successful"
-    else
-        echo -e "${RED}Error: Please Add Remote Configiuration"
-
-    if [[ "$INPUT_ACTION" == "apply" ]]; then
-        if [[ -f "./config1.tfvars" ]];then
-            if terraform apply -auto-aprove -var-file="./config2.tfvars"; then
-                echo  "infrastucture Deployed successful ! "
-            else
-                echo -e "${RED}Error: Infrastructure Deployment failed "
-            fi
-        else 
-            echo -e "${RED}Error: Configuration not found"
-            exit 1
-        fi
-
-    elif [[ "$INPUT_ACTION" == "test" ]]; then
-        if terraform plan -var-file="./config2.tfvars"; then
-            echo -e "${GREEN} Infrastructure test completed successfully."
-        else
-            echo -e "${RED}Error: Infrastructure test failed. Please check config variables."
-            exit 1
-        fi
-    # Check if the INPUT_ACTION is "validate"
-
-    elif [[ "$INPUT_ACTION" == "validate" ]]; then
-        if terraform validate; then
-            echo -e "${GREEN} Infra validation succeeded."
-        else
-            echo -e "${RED}Error: Infra validation failed."
-            exit 1
-        fi
-
-    # Check if the INPUT_ACTION is "destroy"
-    elif [[ "$INPUT_ACTION" == "destroy" ]]; then
-        # Check if the config1.tfvars file exists
-        if [[ -f "./config2.tfvars" ]]; then
-            # Run Terraform destroy with auto-approval and the specified var file
-            if terraform destroy -auto-approve -var-file="./config2.tfvars"; then
-                echo "Infrastructure destruction successful!"
-            else
-                echo -e "${RED}Error: Infrastructure destruction failed."
-                exit 1
-            fi
-        else
-            echo -e "${RED}Error: configuration file not found."
-            exit 1
-        fi
-    else
-        echo -e "${RED}Error: Invalid INPUT_ACTION. It should be one of: apply, test, validate, destroy."
-        exit 1
-    fi
-
-# else
-#     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
+    spinup "$INPUT_PLATFORM_CONF_VAR"
+    
+else
+    echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
 fi
 
 
 # echo "terraform $INPUT_ACTION -var-file=./config2.tfvars"
-
-
