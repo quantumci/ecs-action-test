@@ -156,12 +156,12 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == no ]]; then
     cd /workspace/Platform_Infra/
     echo "change directory to ${pwd}"
     spinup "$INPUT_PLATFORM_CONF_VAR"
-    
-else
-    echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
 
 elif  [[ "$INPUT_EXISTING_PLATFORM_INFRA" == yes ]]; then
     echo -e "${GREEN}  you have existed platform infra "
+
+else
+    echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
 
 fi
 
