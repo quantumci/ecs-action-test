@@ -135,12 +135,12 @@ spinup() {
     fi
 }
 
-if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
+if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
     echo "change directory to pwd"
     spinup "$INPUT_BASE_CONF_VAR"
     
-elif  [["$INPUT_EXISTING_BASE_INFRA" == "yes"]]; then
+elif  [[ "$INPUT_EXISTING_BASE_INFRA" == yes ]]; then
     echo -e "${GREEN}  you have existed base infra "
 
 else
@@ -152,7 +152,7 @@ fi
 # terraform plan -var-file="$INPUT_BASE_CONF_VAR"
 # echo "terraform $INPUT_ACTION -var-file=./config1.tfvars"
 
-if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
+if [["$INPUT_EXISTING_PLATFORM_INFRA" == no ]]; then
     cd /workspace/Platform_Infra/
     echo "change directory to ${pwd}"
     spinup "$INPUT_PLATFORM_CONF_VAR"
@@ -160,7 +160,7 @@ if [["$INPUT_EXISTING_PLATFORM_INFRA" == "no"]]; then
 else
     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
 
-elif  [["$INPUT_EXISTING_PLATFORM_INFRA" == "yes"]]; then
+elif  [[ "$INPUT_EXISTING_PLATFORM_INFRA" == yes ]]; then
     echo -e "${GREEN}  you have existed platform infra "
 
 fi
