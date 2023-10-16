@@ -76,12 +76,15 @@ spinup() {
     else
         echo -e "${RED}Error: Configuration variable are not available."
         exit 1
+    fi
 
     if terraform init -backend-config="./env/base.config"; then
         echo -e "${GREEN} Infra setup Successful"
     else
         echo -e "${RED}Error: Please Add Remote Configiuration"
 
+    fi
+    
     if [[ "$INPUT_ACTION" == "apply" ]]; then
         if [[ -f "./config1.tfvars" ]];then
             if terraform apply -auto-aprove -var-file="./config1.tfvars"; then
