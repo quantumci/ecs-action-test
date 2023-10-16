@@ -72,7 +72,7 @@ spinup() {
 
     if [[ "$1" ]]; then
         ls;
-        cat $1 > config1.tfvars
+        cat $1 > config1.tfvars;
         cat config1.tfvars
         ls;
         echo -e "${GREEN} variable Configuration Available."
