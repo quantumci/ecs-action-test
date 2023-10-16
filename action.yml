@@ -2,6 +2,14 @@ name: 'Terraform Action'
 description: 'Run Terraform to deploy infrastructure'
 author: 'Pradipbabar'
 inputs:
+  existing_base_infra:
+    description: 'provide choice for existing base infra '
+    required: false
+
+  existing_platform_infra:
+    description: 'provide choice for existing platform infra '
+    required: false
+  
   base_conf_var:
     description: 'path to base configuration variables file '
     required: false
@@ -33,13 +41,15 @@ inputs:
   action:
     description: 'Terraform Action to apply or destroy infrastructure'
     required: false
-    default: 'plan'
+
 
 
 runs:
   using: "docker"
   image: "Dockerfile"
   env:
+    INPUT_EXISTING_BASE_INFRA: ${{ inputs.existing_base_infra }}
+    INPUT_EXISTING_PLATFORM_INFRA: ${{ inputs.existing_platform_infra }}
     INPUT_BASE_CONF_VAR: ${{ inputs.base_conf_var }}
     INPUT_PLATFORM_CONF_VAR: ${{ inputs.platform_conf_var }}
     INPUT_AWS_ACCESS_KEY: ${{ inputs.aws_access_key }}

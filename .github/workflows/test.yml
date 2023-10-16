@@ -5,13 +5,13 @@ on:
         action_input:
           description: 'Action to perform'
           required: true
-          default: 'plan'
+          default: 'test'
           type: choice
           options:
-            - plan
+            - test
             - apply
             - destroy
-        
+            - validate
 
 
 jobs:
@@ -25,11 +25,14 @@ jobs:
       - name: run local actions
         uses: ./ # use correct github action here eg.  quantumci/ecs-action-test@v1.0.0
         with:
+          existing_base_infra: yes
+          existing_platform_infra: yes
           base_conf_var: ./Base_Infra/config.tfvars
           platform_conf_var: ./Platform_Infra/config.tfvars
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # add Secretes variables 
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # add Secretes variables
           aws_default_region: us-east-1
-          remote_bucket_name: pradip-bucket-ecs-111 # add your own s3 bucket name
+          remote_bucket_name: test-123-ecs # add your own s3 bucket name
           remote_bucket_region: us-east-1 # add your own s3 bucket region
           action: ${{ inputs.action_input }}
+
