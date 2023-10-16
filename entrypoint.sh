@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo ${{github.repository}};
+echo $INPUT_REPO;
 
 # Update the values in the config file
 config1_file="/workspace/Base_Infra/env/base.config"
