@@ -129,8 +129,8 @@ if [["$INPUT_EXISTING_BASE_INFRA" == "no"]]; then
         exit 1
     fi
 
-else
-    echo -e "${GREEN} you have existed base infra"
+# else
+#     echo -e "${GREEN} you have existed base infra"
 fi
 
 ################################################################################################################
