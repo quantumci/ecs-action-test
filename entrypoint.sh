@@ -29,19 +29,19 @@ fi
 
 # Check if AWS credentials are set
 
-# if [[ -z "$INPUT_AWS_ACCESS_KEY" || -z "$INPUT_AWS_SECRET_ACCESS_KEY" ]]; then
+if [[ -z "$INPUT_AWS_ACCESS_KEY" || -z "$INPUT_AWS_SECRET_ACCESS_KEY" ]]; then
 
-#     echo -e "${RED}Error: AWS credentials not provided."
+    echo -e "${RED}Error: AWS credentials not provided."
 
-#     exit 1
-# else
-#     # Set AWS Creds 
-#     export AWS_ACCESS_KEY_ID=$INPUT_AWS_ACCESS_KEY;
-#     export AWS_SECRET_ACCESS_KEY=$INPUT_AWS_SECRET_ACCESS_KEY;
+    exit 1
+else
+    # Set AWS Creds 
+    export AWS_ACCESS_KEY_ID=$INPUT_AWS_ACCESS_KEY;
+    export AWS_SECRET_ACCESS_KEY=$INPUT_AWS_SECRET_ACCESS_KEY;
     
-#     echo -e "${GREEN} AWS secret configured successfully"
+    echo -e "${GREEN} AWS secret configured successfully"
 
-# fi
+fi
 
 # Check inputs is yes or no for INPUT_BASE_CONF_VAR and INPUT_PLATFORM_CONF_VAR
 if [[ "$INPUT_EXISTING_BASE_INFRA" != "yes" && "$INPUT_EXISTING_BASE_INFRA" != "no" ]]; then
@@ -112,7 +112,7 @@ spinup() {
     if terraform init -backend-config="./env/base.config"; then
         echo -e "${GREEN} Infra setup Successful"
     else
-        echo -e "${RED}Error: Please Add Remote Configiuration"
+        echo -e "${RED}Error: Please Add Remote Configiuration or check credentials "
 
     fi
 
