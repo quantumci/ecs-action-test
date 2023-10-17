@@ -195,6 +195,7 @@ spinup() {
 if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
     download "$INPUT_BASE_CONF_VAR" "/workspace/Base_Infra"
+    ls;
     cat $SAVE_FILE_NAME;
     # spinup "$INPUT_BASE_CONF_VAR"
     
