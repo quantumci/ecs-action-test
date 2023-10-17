@@ -85,6 +85,7 @@ download() {
         path=$(IFS=/ ; echo "${parts[*]:3}")
         echo "Owner: $owner"
         echo "Repository: $repo"
+        echo "branch: $branch"
         echo "Path: $path"
 
 
@@ -105,6 +106,7 @@ download() {
              -o "$SAVE_PATH/$SAVE_FILE_NAME" \
              -L https://raw.githubusercontent.com/$owner/$repo/$branch/$path
 
+        echo "https://raw.githubusercontent.com/$owner/$repo/$branch/$path"
     fi
 
     if grep -q "$ERROR_MESSAGE" "$SAVE_PATH/$SAVE_FILE_NAME"; then
