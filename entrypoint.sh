@@ -190,7 +190,7 @@ if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
     download "$INPUT_BASE_CONF_VAR" "/workspace/Base_Infra"
     cat $SAVE_FILE_NAME;
-    spinup "$INPUT_BASE_CONF_VAR"
+    # spinup "$INPUT_BASE_CONF_VAR"
     
 elif  [[ "$INPUT_EXISTING_BASE_INFRA" == yes ]]; then
     echo -e "${GREEN}  you have existed base infra "
