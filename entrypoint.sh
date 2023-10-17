@@ -109,8 +109,10 @@ download() {
 
         echo "https://raw.githubusercontent.com/$owner/$repo/$branch/$path"
 
+        echo "$SAVE_PATH/$SAVE_FILE_NAME"
+
             if grep -q 404: Not found "$SAVE_PATH/$SAVE_FILE_NAME"; then
-                echo "404: Not found error. Please check the file path."
+                echo -e "${RED}404: Not found error. Please check the file path."
                 exit 1
 
             fi
