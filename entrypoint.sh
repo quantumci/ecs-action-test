@@ -71,7 +71,6 @@ fi
 
 download() {
 
-    ERROR_MESSAGE="404: Not found"
 
     if [ -n "$1" ]; then
 
@@ -110,7 +109,7 @@ download() {
 
         echo "https://raw.githubusercontent.com/$owner/$repo/$branch/$path"
 
-            if grep -q "$ERROR_MESSAGE" "$SAVE_PATH/$SAVE_FILE_NAME"; then
+            if grep -q 404: Not found "$SAVE_PATH/$SAVE_FILE_NAME"; then
                 echo "404: Not found error. Please check the file path."
                 exit 1
 
