@@ -71,33 +71,14 @@ fi
 
 download() {
 
-
-    if [ -n "$1" ]; then
-
         variable="$1"
         SAVE_PATH="$2"
-        SAVE_FILE_NAME="config1.tfvars"
-        IFS='/' read -ra parts <<< "$variable"
-        owner="${parts[0]}"
-        repo="${parts[1]}"
-        branch="${parts[2]}"
-        path=$(IFS=/ ; echo "${parts[*]:3}")
-        echo "Owner: $owner"
-        echo "Repository: $repo"
-        echo "branch: $branch"
-        echo "Path: $path"
-
-
-    else 
-        echo -r "${RED} error file path not found"
-        exit 1
-    fi
 
     if [ -n "$INPUT_TOKEN" ]; then
         curl -H "Authorization: token $INPUT_TOKEN" \
              -H 'Accept: application/vnd.github.v3.raw' \
              -o "$SAVE_PATH/$SAVE_FILE_NAME" \
-             -L https://raw.githubusercontent.com/$owner/$repo/$branch/$path
+             -L https://raw.githubusercontent.com/$1
         
 
     
@@ -105,9 +86,9 @@ download() {
 
         curl -H 'Accept: application/vnd.github.v3.raw' \
              -o "$SAVE_PATH/$SAVE_FILE_NAME" \
-             -L https://raw.githubusercontent.com/$owner/$repo/$branch/$path
+             -L https://raw.githubusercontent.com/$1
 
-        echo "https://raw.githubusercontent.com/$owner/$repo/$branch/$path"
+        echo "https://raw.githubusercontent.com/$1"
 
         echo "$SAVE_PATH/$SAVE_FILE_NAME"
 
@@ -187,7 +168,10 @@ spinup() {
 
 #########################################################################################################
 
-if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
+if  [[ "$INPUT_EXISTING_BASE_INFRA" == yes ]]; then
+    echo -e "${GREEN}  you have existed base infra "
+
+elif [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
     download "$INPUT_BASE_CONF_VAR" "/workspace/Base_Infra"
     
@@ -198,10 +182,8 @@ if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
                 exit 1
 
             fi
-    # spinup "$INPUT_BASE_CONF_VAR"
+    spinup "$INPUT_BASE_CONF_VAR"
     
-elif  [[ "$INPUT_EXISTING_BASE_INFRA" == yes ]]; then
-    echo -e "${GREEN}  you have existed base infra "
 
 else
     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
@@ -210,16 +192,24 @@ fi
 
 ################################################################################################################
 
+if  [[ "$INPUT_EXISTING_PLATFORM_INFRA" == yes ]]; then
+    echo -e "${GREEN}  you have existed platform infra "
 
-if [["$INPUT_EXISTING_PLATFORM_INFRA" == no ]]; then
+elif [["$INPUT_EXISTING_PLATFORM_INFRA" == no ]]; then
     cd /workspace/Platform_Infra/
     download "$INPUT_PLATFORM_CONF_VAR" "/workspace/Platform_Infra"
+
+        if grep -q 404: Not found "$SAVE_FILE_NAME"; then
+                echo -e "${RED}404: Not found error. Please check the file path."
+                exit 1
+
+        fi
+        
     spinup "$INPUT_PLATFORM_CONF_VAR"
 
-elif  [[ "$INPUT_EXISTING_PLATFORM_INFRA" == yes ]]; then
-    echo -e "${GREEN}  you have existed platform infra "
 
 else
     echo -e "${RED}Error: Invalid input please provide choice (yes/no)"
+    exit 1
 
 fi
