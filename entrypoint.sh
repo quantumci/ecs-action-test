@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Define Color escape codes
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -9,6 +10,7 @@ NC='\033[0m'
 # Update the values in the config file
 config1_file="/workspace/Base_Infra/env/base.config"
 config2_file="/workspace/Platform_Infra/env/platform.config"
+
 
 if [[ ! "$config1_file" || ! "$config2_file" ]]; then
 

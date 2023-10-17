@@ -13,6 +13,7 @@ on:
             - destroy
             - validate
 
+
 jobs:
   test-action:
     runs-on: ubuntu-latest
@@ -34,3 +35,4 @@ jobs:
           remote_bucket_name: test-123-ecs # add your own s3 bucket name
           remote_bucket_region: us-east-1 # add your own s3 bucket region
           action: ${{ inputs.action_input }}
+
