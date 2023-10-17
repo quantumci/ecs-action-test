@@ -83,12 +83,13 @@ jobs:
         with:
           existing_base_infra: no
           existing_platform_infra: yes
-          base_conf_var: ./Base_Infra/config.tfvars
-          platform_conf_var: ./Platform_Infra/config.tfvars
+          base_conf_var: <owner>/<repo_name>/<branch>/<path_from_root_file>
+          platform_conf_var: <owner>/<repo_name>/<branch>/<path_from_root_file>
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # add Secretes variables 
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # add Secretes variables
           aws_default_region: us-east-1
           remote_bucket_name: test-123-ecs # add your own s3 bucket name
           remote_bucket_region: us-east-1 # add your own s3 bucket region
           action: ${{ inputs.action_input }}
+          token: ${{ secrets.GITHUB_TOKEN }} # Add token if your repository is private
 ```
