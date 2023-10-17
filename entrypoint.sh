@@ -111,11 +111,6 @@ download() {
 
         echo "$SAVE_PATH/$SAVE_FILE_NAME"
 
-            if grep -q 404: Not found "$SAVE_PATH/$SAVE_FILE_NAME"; then
-                echo -e "${RED}404: Not found error. Please check the file path."
-                exit 1
-
-            fi
     fi
 
 }
@@ -195,8 +190,14 @@ spinup() {
 if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
     download "$INPUT_BASE_CONF_VAR" "/workspace/Base_Infra"
-    ls;
+    
     cat $SAVE_FILE_NAME;
+
+            if grep -q 404: Not found "$SAVE_FILE_NAME"; then
+                echo -e "${RED}404: Not found error. Please check the file path."
+                exit 1
+
+            fi
     # spinup "$INPUT_BASE_CONF_VAR"
     
 elif  [[ "$INPUT_EXISTING_BASE_INFRA" == yes ]]; then
