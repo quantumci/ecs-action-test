@@ -29,19 +29,19 @@ fi
 
 # Check if AWS credentials are set
 
-if [[ -z "$INPUT_AWS_ACCESS_KEY" || -z "$INPUT_AWS_SECRET_ACCESS_KEY" ]]; then
+# if [[ -z "$INPUT_AWS_ACCESS_KEY" || -z "$INPUT_AWS_SECRET_ACCESS_KEY" ]]; then
 
-    echo -e "${RED}Error: AWS credentials not provided."
+#     echo -e "${RED}Error: AWS credentials not provided."
 
-    exit 1
-else
-    # Set AWS Creds 
-    export AWS_ACCESS_KEY_ID=$INPUT_AWS_ACCESS_KEY;
-    export AWS_SECRET_ACCESS_KEY=$INPUT_AWS_SECRET_ACCESS_KEY;
+#     exit 1
+# else
+#     # Set AWS Creds 
+#     export AWS_ACCESS_KEY_ID=$INPUT_AWS_ACCESS_KEY;
+#     export AWS_SECRET_ACCESS_KEY=$INPUT_AWS_SECRET_ACCESS_KEY;
     
-    echo -e "${GREEN} AWS secret configured successfully"
+#     echo -e "${GREEN} AWS secret configured successfully"
 
-fi
+# fi
 
 # Check inputs is yes or no for INPUT_BASE_CONF_VAR and INPUT_PLATFORM_CONF_VAR
 if [[ "$INPUT_EXISTING_BASE_INFRA" != "yes" && "$INPUT_EXISTING_BASE_INFRA" != "no" ]]; then
@@ -66,6 +66,53 @@ if [[ ! "$INPUT_ACTION" =~ ^(test|apply|destroy|refresh|validate)$ ]]; then
     exit 1
 
 fi
+
+# Function to download files
+
+download() {
+
+    ERROR_MESSAGE="404: Not found"
+
+    if [ -n "$1" ]; then
+
+        variable="$1"
+        SAVE_PATH="$2"
+        SAVE_FILE_NAME="config1.tfvars"
+        IFS='/' read -ra parts <<< "$variable"
+        owner="${parts[0]}"
+        repo="${parts[1]}"
+        branch="${parts[2]}"
+        path=$(IFS=/ ; echo "${parts[*]:3}")
+        echo "Owner: $owner"
+        echo "Repository: $repo"
+        echo "Path: $path"
+
+
+    else 
+        echo -r "${RED} error file path not found"
+        exit 1
+    fi
+
+    if [ -n "$INPUT_TOKEN" ]; then
+        curl -H "Authorization: token $INPUT_TOKEN" \
+             -H 'Accept: application/vnd.github.v3.raw' \
+             -o "$SAVE_PATH/$SAVE_FILE_NAME" \
+             -L https://raw.githubusercontent.com/$owner/$repo/$branch/$path
+    
+    else
+
+        curl -H 'Accept: application/vnd.github.v3.raw' \
+             -o "$SAVE_PATH/$SAVE_FILE_NAME" \
+             -L https://raw.githubusercontent.com/$owner/$repo/$branch/$path
+
+    fi
+
+    if grep -q "$ERROR_MESSAGE" "$SAVE_PATH/$SAVE_FILE_NAME"; then
+        echo "404: Not found error. Please check the file path."
+        exit 1
+
+    fi
+}
 
 
 # Funcrion For Run Terraform\
@@ -137,9 +184,12 @@ spinup() {
     fi
 }
 
+#########################################################################################################
+
 if [[ "$INPUT_EXISTING_BASE_INFRA" == no ]]; then
     cd /workspace/Base_Infra/
-    echo "change directory to pwd"
+    download "$INPUT_BASE_CONF_VAR" "/workspace/Base_Infra"
+    cat $SAVE_FILE_NAME;
     spinup "$INPUT_BASE_CONF_VAR"
     
 elif  [[ "$INPUT_EXISTING_BASE_INFRA" == yes ]]; then
@@ -151,12 +201,11 @@ else
 fi
 
 ################################################################################################################
-# terraform plan -var-file="$INPUT_BASE_CONF_VAR"
-# echo "terraform $INPUT_ACTION -var-file=./config1.tfvars"
+
 
 if [["$INPUT_EXISTING_PLATFORM_INFRA" == no ]]; then
     cd /workspace/Platform_Infra/
-    echo "change directory to ${pwd}"
+    download "$INPUT_PLATFORM_CONF_VAR" "/workspace/Platform_Infra"
     spinup "$INPUT_PLATFORM_CONF_VAR"
 
 elif  [[ "$INPUT_EXISTING_PLATFORM_INFRA" == yes ]]; then
