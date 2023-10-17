@@ -99,6 +99,8 @@ download() {
              -H 'Accept: application/vnd.github.v3.raw' \
              -o "$SAVE_PATH/$SAVE_FILE_NAME" \
              -L https://raw.githubusercontent.com/$owner/$repo/$branch/$path
+        
+
     
     else
 
@@ -107,13 +109,14 @@ download() {
              -L https://raw.githubusercontent.com/$owner/$repo/$branch/$path
 
         echo "https://raw.githubusercontent.com/$owner/$repo/$branch/$path"
+
+            if grep -q "$ERROR_MESSAGE" "$SAVE_PATH/$SAVE_FILE_NAME"; then
+                echo "404: Not found error. Please check the file path."
+                exit 1
+
+            fi
     fi
 
-    if grep -q "$ERROR_MESSAGE" "$SAVE_PATH/$SAVE_FILE_NAME"; then
-        echo "404: Not found error. Please check the file path."
-        exit 1
-
-    fi
 }
 
 
